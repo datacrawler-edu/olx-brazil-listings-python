@@ -37,7 +37,7 @@ This complete listing comes from a successful run with optional details disabled
   "attributes": [
     {
       "label": "area",
-      "value": "136mÂ²"
+      "value": "136m²"
     },
     {
       "label": "bedrooms",
@@ -202,7 +202,7 @@ Read the [full FAQ](docs/faq.md) for additional input and charging questions.
 
 ## Limits and pricing
 
-The input accepts up to 1,000 URLs and 1,000 keyword searches. `maxResults` is 1â€“10,000, `maxPagesPerSearch` is 1â€“20, and `maxPagesTotal` is 1â€“1,000. These are caps, not guarantees that enough source listings are available. Retry and pacing settings are managed by the Actor.
+The input accepts up to 1,000 URLs and 1,000 keyword searches. `maxResults` is 1–10,000, `maxPagesPerSearch` is 1–20, and `maxPagesTotal` is 1–1,000. These are caps, not guarantees that enough source listings are available. Retry and pacing settings are managed by the Actor.
 
 Billing is per unique listing saved, including a base listing whose optional details are incomplete. Empty searches, blocked requests, duplicates and rejected rows do not create listing charges. Consult the [Actor's Pricing tab](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) for current tier prices and applicable platform charges.
 
