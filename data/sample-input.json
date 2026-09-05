@@ -1,0 +1,9 @@
+{
+  "searchUrls": [
+    "https://www.olx.com.br/imoveis/venda/estado-sp"
+  ],
+  "maxResults": 3,
+  "maxPagesPerSearch": 1,
+  "maxPagesTotal": 1,
+  "includeDetails": false
+}

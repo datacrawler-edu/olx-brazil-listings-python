@@ -1,0 +1,73 @@
+{
+  "title": "OLX Brazil Listings Scraper input",
+  "description": "Start with the example search below, replace it with your OLX Brazil search URL, or clear it to search by keyword only. The example collects up to 3 listings from one page. Results are saved once per listing ID.",
+  "type": "object",
+  "schemaVersion": 1,
+  "additionalProperties": false,
+  "properties": {
+    "searchUrls": {
+      "title": "OLX search URLs",
+      "description": "Paste search-result URLs copied from OLX Brazil to keep your category, location and filters. Replace the example URL with your own, or remove it when searching only by keyword.",
+      "type": "array",
+      "prefill": ["https://www.olx.com.br/imoveis/venda/estado-sp"],
+      "editor": "stringList",
+      "maxItems": 1000,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^https?://([A-Za-z0-9-]+\\.)*olx\\.com\\.br/"
+      }
+    },
+    "searchQueries": {
+      "title": "Search queries",
+      "description": "Optional keywords searched across Brazil, for example iphone or apartamento. When URLs are also entered, both sets of searches run. Clear the example URL for a keyword-only search.",
+      "type": "array",
+      "editor": "stringList",
+      "maxItems": 1000,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "maxResults": {
+      "title": "Maximum listings",
+      "description": "Hard limit for unique listings saved across the whole run.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000,
+      "default": 100,
+      "prefill": 3,
+      "editor": "number"
+    },
+    "maxPagesPerSearch": {
+      "title": "Maximum pages per source",
+      "description": "Follow OLX's next-page link up to this many pages for each search URL or generated query URL.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "default": 1,
+      "prefill": 1,
+      "editor": "number"
+    },
+    "maxPagesTotal": {
+      "title": "Maximum pages per run",
+      "description": "Global safety limit for pages requested across all search URLs and generated query URLs. Use this to control runtime and request volume for large batches.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000,
+      "default": 1000,
+      "prefill": 1,
+      "editor": "number"
+    },
+    "includeDetails": {
+      "title": "Fetch listing details",
+      "description": "Add available descriptions, additional photos, seller information and postal location. This may take longer. Seller contact fields are not guaranteed.",
+      "type": "boolean",
+      "default": false,
+      "prefill": false,
+      "editor": "checkbox"
+    }
+  }
+}
