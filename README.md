@@ -21,31 +21,31 @@ This complete listing comes from a successful run with optional details disabled
 
 ```json
 {
-  "listingId": "1532739229",
-  "title": "Sobrado",
-  "url": "https://sp.olx.com.br/sao-paulo-e-regiao/imoveis/sobrado-1532739229",
-  "price": 95000,
-  "priceDisplay": "R$ 95.000",
+  "listingId": "1532746016",
+  "title": "Apartamento à venda com 123m², 3 quartos e 2 vagas",
+  "url": "https://sp.olx.com.br/sao-paulo-e-regiao/imoveis/apartamento-a-venda-com-123m-3-quartos-e-2-vagas-1532746016",
+  "price": 1440000,
+  "priceDisplay": "R$ 1.440.000",
   "currency": "BRL",
   "location": {
-    "display": "Francisco Morato, Parque Cento e Vinte",
-    "city": "Francisco Morato",
+    "display": "São Paulo, Carandiru",
+    "city": "São Paulo",
     "state": "SP",
-    "neighborhood": "Parque Cento e Vinte",
+    "neighborhood": "Carandiru",
     "postalCode": null
   },
   "attributes": [
     {
       "label": "area",
-      "value": "200m²"
+      "value": "123m²"
     },
     {
       "label": "bedrooms",
-      "value": "3"
+      "value": "4"
     },
     {
       "label": "bathrooms",
-      "value": "2"
+      "value": "3"
     },
     {
       "label": "parking",
@@ -53,12 +53,12 @@ This complete listing comes from a successful run with optional details disabled
     }
   ],
   "photos": [
-    "https://img.olx.com.br/thumbs700x500/22/228690085652094.webp"
+    "https://img.olx.com.br/thumbs700x500/79/793603806921287.webp"
   ],
-  "thumbnailUrl": "https://img.olx.com.br/thumbs700x500/22/228690085652094.webp",
+  "thumbnailUrl": "https://img.olx.com.br/thumbs700x500/79/793603806921287.webp",
   "description": null,
   "seller": null,
-  "postedAtText": "Hoje, 07:55",
+  "postedAtText": "Hoje, 08:43",
   "searchUrl": "https://www.olx.com.br/imoveis/venda/estado-sp",
   "searchQuery": null,
   "pageNumber": 1,
@@ -66,7 +66,7 @@ This complete listing comes from a successful run with optional details disabled
   "detailsStatus": "not_requested",
   "sellerDetails": null,
   "sellerDetailsStatus": "not_requested",
-  "scrapedAt": "2026-09-05T11:04:19.374396+00:00"
+  "scrapedAt": "2026-09-05T11:54:23.170870+00:00"
 }
 ```
 
@@ -104,6 +104,8 @@ python examples/run_actor.py --input data/sample-input.json --max-charge 0.003
 ```
 
 The example uses the official Apify client, a USD 0.003 event-charge cap and a three-minute run timeout. It writes `output/result.json` containing `runStatus`, `summary` and `items`. An event-charge cap is not a promise that all account-level platform charges are included. Check the run in Console before repeating a request after a connection failure.
+
+General category URLs are supported: the Actor automatically requests their listing results while preserving the location and filters in your URL. Source access and available detail fields can vary by category.
 
 ## Input example
 
