@@ -1,7 +1,7 @@
 # OLX Brazil Listings Python
 
 Python examples for collecting OLX Brazil listing data through the hosted
-[OLX Brazil Scraper](https://apify.com/datascraperes/olx-brazil-listings-scraper).
+[OLX Brazil Scraper](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata).
 Export advertised BRL prices, locations, attributes, photos and listing URLs
 for property research and marketplace price comparisons.
 
@@ -125,6 +125,8 @@ start paid runs. See [CONTRIBUTING.md](CONTRIBUTING.md) and
 Open a GitHub issue for these examples. For hosted scraping issues, use the
 Actor's Issues tab with a sanitized input and run ID. Never include tokens.
 Use returned data in accordance with applicable rules and source restrictions.
+
+Apify links in this guide contain the affiliate identifier `fpr=edudata`.
 
 ## License
 

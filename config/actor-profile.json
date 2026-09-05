@@ -1,0 +1,59 @@
+{
+  "repository": {
+    "name": "olx-brazil-listings-python",
+    "description": "Python client examples and CSV exports for OLX Brazil listings, prices, locations and photos through Apify.",
+    "homepage": "https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata",
+    "language": "Python",
+    "license": "MIT"
+  },
+  "actor": {
+    "displayName": "OLX Brazil Scraper | Listings, Prices & Photos",
+    "id": "datascraperes/olx-brazil-listings-scraper",
+    "storeUrl": "https://apify.com/datascraperes/olx-brazil-listings-scraper",
+    "apiBaseUrl": "https://api.apify.com/v2/acts/datascraperes~olx-brazil-listings-scraper"
+  },
+  "affiliate": {
+    "enabled": true,
+    "parameter": "fpr=edudata",
+    "actorUrl": "https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata",
+    "pricingUrl": "https://apify.com/pricing?fpr=edudata"
+  },
+  "interfaces": {
+    "web": {
+      "enabled": true,
+      "primaryInput": "searchUrls",
+      "exportFormats": [
+        "JSON",
+        "CSV",
+        "Excel"
+      ]
+    },
+    "api": {
+      "enabled": true,
+      "examples": [
+        "Python"
+      ]
+    }
+  },
+  "seo": {
+    "primaryKeyword": "OLX Brazil listings Python",
+    "topics": [
+      "api-client",
+      "apify",
+      "brazil",
+      "classifieds",
+      "csv",
+      "olx",
+      "python",
+      "real-estate"
+    ]
+  },
+  "distribution": {
+    "githubUrl": "https://github.com/datacrawler-edu/olx-brazil-listings-python",
+    "githubToActorUrl": "https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata"
+  },
+  "support": {
+    "issuesUrl": "https://github.com/datacrawler-edu/olx-brazil-listings-python/issues",
+    "actorSupportUrl": "https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata"
+  }
+}
