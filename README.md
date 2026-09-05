@@ -222,7 +222,7 @@ Links to Apify contain the affiliate identifier `fpr=edudata`; we may earn a com
 
 For example-code problems, [open a GitHub issue](https://github.com/datacrawler-edu/olx-brazil-listings-python/issues) with the command and sanitized input. For hosted scraping problems, use the [Actor's Issues tab](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) and provide the run ID without credentials.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for offline tests and [SECURITY.md](SECURITY.md) for security reports.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for offline tests.
 
 ## License
 
