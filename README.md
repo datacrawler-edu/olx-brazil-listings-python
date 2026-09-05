@@ -80,7 +80,7 @@ If your account has access to the hosted Actor:
 4. Click **Start** and follow the progress messages.
 5. Open the completed run's **Dataset**, inspect the listings, and export JSON, CSV or Excel.
 
-Select `enrichProfiles` only if you want seller profile enrichment at an additional $0.001 per unique identifiable profile saved in the run ($1 per 1,000), including partial profiles. It works independently of listing details.
+Select `enrichProfiles` only if you want seller profile enrichment at an additional price per unique identifiable profile saved in the run, depending on your plan ($0.75-$1 per 1,000), including partial profiles. It works independently of listing details.
 
 For keyword-only searches, remove the example URL and enter `searchQueries`. See the [no-code guide](docs/no-code-guide.md) for a walkthrough. Python installation and an API token are only needed for the developer workflow below.
 
@@ -207,7 +207,18 @@ Read the [full FAQ](docs/faq.md) for additional input and charging questions.
 
 The input accepts up to 1,000 URLs and 1,000 keyword searches. `maxResults` is 1–10,000, `maxPagesPerSearch` is 1–20, and `maxPagesTotal` is 1–1,000. These are caps, not guarantees that enough source listings are available. Retry and pacing settings are managed by the Actor.
 
-Listing billing is per unique listing saved, including a base listing whose optional listing-page details are incomplete. Empty searches, blocked requests, duplicates and rejected rows do not create listing charges. With `enrichProfiles=true`, an additional **$0.001 per unique seller profile per run** applies in every tier, equivalent to **$1 per 1,000 profiles**. The charge requires useful profile endpoint data with an unambiguous `publicAccountId` saved in the Dataset; partial profiles qualify. Repeated sellers are charged once per run. Empty, blocked, unidentified and conflicting-identity profiles do not create profile charges. Basic seller data from the listing page is included in listing billing. The profile option is off by default.
+Optional profile enrichment prices:
+
+| Plan | Price per profile | Equivalent per 1,000 profiles |
+| --- | --- | --- |
+| Free | $0.00100 | $1.00 |
+| Bronze | $0.00090 | $0.90 |
+| Silver | $0.00080 | $0.80 |
+| Gold | $0.00075 | $0.75 |
+| Platinum | $0.00075 | $0.75 |
+| Diamond | $0.00075 | $0.75 |
+
+Listing billing is per unique listing saved, including a base listing whose optional listing-page details are incomplete. Empty searches, blocked requests, duplicates and rejected rows do not create listing charges. With `enrichProfiles=true`, an additional charge per unique seller profile per run applies: Free **$0.001 ($1/1,000)**, Bronze **$0.0009 ($0.90/1,000)**, Silver **$0.0008 ($0.80/1,000)**, and Gold/Platinum/Diamond **$0.00075 ($0.75/1,000)**. The charge requires useful profile endpoint data with an unambiguous `publicAccountId` saved in the Dataset; partial profiles qualify. Repeated sellers are charged once per run. Empty, blocked, unidentified and conflicting-identity profiles do not create profile charges. Basic seller data from the listing page is included in listing billing. The profile option is off by default.
 
 The spending guard reserves budget for both events before profile requests and may stop with some budget remaining. `summary.billingCharged` counts listings and `summary.profilesCharged` counts profiles. Consult the [Actor's Pricing tab](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) for current tier prices and applicable platform charges.
 

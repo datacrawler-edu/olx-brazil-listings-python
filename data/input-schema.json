@@ -72,8 +72,8 @@
       "editor": "checkbox"
     },
     "enrichProfiles": {
-      "title": "Enrich seller profiles (+$1 per 1,000 profiles)",
-      "description": "Optional extra charge: $0.001 per unique seller profile per run when useful profile data with a public seller ID is saved. Partial profiles are billable; empty, blocked and unidentified profiles are not. Works independently of listing details. Disabled by default.",
+      "title": "Enrich seller profiles (extra charge by plan)",
+      "description": "Optional extra charge per unique seller profile per run: Free $0.001, Bronze $0.0009, Silver $0.0008, Gold/Platinum/Diamond $0.00075 when useful profile data with a public seller ID is saved. Partial profiles are billable; empty, blocked and unidentified profiles are not. Works independently of listing details. Disabled by default.",
       "type": "boolean",
       "default": false,
       "prefill": false,
