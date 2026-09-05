@@ -9,7 +9,9 @@
       "title": "OLX search URLs",
       "description": "Paste search-result URLs copied from OLX Brazil to keep your category, location and filters. Replace the example URL with your own, or remove it when searching only by keyword.",
       "type": "array",
-      "prefill": ["https://www.olx.com.br/imoveis/venda/estado-sp"],
+      "prefill": [
+        "https://www.olx.com.br/imoveis/venda/estado-sp"
+      ],
       "editor": "stringList",
       "maxItems": 1000,
       "uniqueItems": true,
@@ -63,7 +65,15 @@
     },
     "includeDetails": {
       "title": "Fetch listing details",
-      "description": "Add available descriptions, additional photos, seller information and postal location. This may take longer. Seller contact fields are not guaranteed.",
+      "description": "Add available listing descriptions, additional photos, basic seller information and postal location from the listing page. Profile endpoint enrichment is a separate optional setting.",
+      "type": "boolean",
+      "default": false,
+      "prefill": false,
+      "editor": "checkbox"
+    },
+    "enrichProfiles": {
+      "title": "Enrich seller profiles (+$1 per 1,000 profiles)",
+      "description": "Optional extra charge: $0.001 per unique seller profile per run when useful profile data with a public seller ID is saved. Partial profiles are billable; empty, blocked and unidentified profiles are not. Works independently of listing details. Disabled by default.",
       "type": "boolean",
       "default": false,
       "prefill": false,

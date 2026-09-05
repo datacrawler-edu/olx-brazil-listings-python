@@ -5,5 +5,6 @@
   "maxResults": 3,
   "maxPagesPerSearch": 1,
   "maxPagesTotal": 1,
-  "includeDetails": false
+  "includeDetails": false,
+  "enrichProfiles": false
 }

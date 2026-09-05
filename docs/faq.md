@@ -14,11 +14,11 @@ Yes. URL and keyword arrays are combined. Global result and page caps still appl
 
 ## Are seller contacts guaranteed?
 
-No. Optional details can be unavailable or partial. Check detailsStatus and sellerDetailsStatus.
+No. The paid `enrichProfiles` option can return partial data and does not guarantee contact fields. Listing-page details remain separate. Check detailsStatus and sellerDetailsStatus.
 
 ## Are empty searches billed as saved listings?
 
-No. Billing events correspond to unique listings saved, including listings with incomplete optional enrichment. Review the Actor Pricing tab for applicable charges.
+No. Billing events correspond to unique listings saved, including listings with incomplete optional enrichment. The optional profile event costs $0.001 per unique identifiable seller with useful endpoint data saved per run, including partial profiles. Empty, blocked and unidentified profiles are not charged. Review the Actor Pricing tab for applicable charges.
 
 ## Is this a historical-price API?
 

@@ -10,7 +10,7 @@ Collect structured OLX Brazil listings from Apify's web interface, or use the Py
 
 - Collect listings from an OLX Brazil search URL or keyword search.
 - Compare advertised prices alongside city, neighborhood and listing attributes.
-- Request available descriptions and seller details when needed.
+- Request listing-page descriptions with `includeDetails`, and separately opt in to paid seller profiles with `enrichProfiles`.
 - Export listings to CSV while retaining nested fields as JSON cells.
 
 This is an unofficial OLX integration guide with executable examples and sample data. The hosted scraper implementation is maintained separately.
@@ -21,23 +21,23 @@ This complete listing comes from a successful run with optional details disabled
 
 ```json
 {
-  "listingId": "1506563934",
-  "title": "Cobertura Residencial / Centro",
-  "url": "https://sp.olx.com.br/vale-do-paraiba-e-litoral-norte/imoveis/cobertura-residencial-centro-1506563934",
-  "price": 1350000,
-  "priceDisplay": "R$ 1.350.000",
+  "listingId": "1532739229",
+  "title": "Sobrado",
+  "url": "https://sp.olx.com.br/sao-paulo-e-regiao/imoveis/sobrado-1532739229",
+  "price": 95000,
+  "priceDisplay": "R$ 95.000",
   "currency": "BRL",
   "location": {
-    "display": "Caraguatatuba, Centro",
-    "city": "Caraguatatuba",
+    "display": "Francisco Morato, Parque Cento e Vinte",
+    "city": "Francisco Morato",
     "state": "SP",
-    "neighborhood": "Centro",
+    "neighborhood": "Parque Cento e Vinte",
     "postalCode": null
   },
   "attributes": [
     {
       "label": "area",
-      "value": "136m²"
+      "value": "200m²"
     },
     {
       "label": "bedrooms",
@@ -45,7 +45,7 @@ This complete listing comes from a successful run with optional details disabled
     },
     {
       "label": "bathrooms",
-      "value": "4"
+      "value": "2"
     },
     {
       "label": "parking",
@@ -53,12 +53,12 @@ This complete listing comes from a successful run with optional details disabled
     }
   ],
   "photos": [
-    "https://img.olx.com.br/thumbs700x500/20/203649526589448.webp"
+    "https://img.olx.com.br/thumbs700x500/22/228690085652094.webp"
   ],
-  "thumbnailUrl": "https://img.olx.com.br/thumbs700x500/20/203649526589448.webp",
+  "thumbnailUrl": "https://img.olx.com.br/thumbs700x500/22/228690085652094.webp",
   "description": null,
   "seller": null,
-  "postedAtText": "Hoje, 06:31",
+  "postedAtText": "Hoje, 07:55",
   "searchUrl": "https://www.olx.com.br/imoveis/venda/estado-sp",
   "searchQuery": null,
   "pageNumber": 1,
@@ -66,7 +66,7 @@ This complete listing comes from a successful run with optional details disabled
   "detailsStatus": "not_requested",
   "sellerDetails": null,
   "sellerDetailsStatus": "not_requested",
-  "scrapedAt": "2026-09-05T09:42:54.300517+00:00"
+  "scrapedAt": "2026-09-05T11:04:19.374396+00:00"
 }
 ```
 
@@ -76,9 +76,11 @@ If your account has access to the hosted Actor:
 
 1. Open [OLX Brazil Scraper](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) in Apify.
 2. In **Input**, paste an OLX Brazil search-result URL into `searchUrls`.
-3. For a small first run, keep `maxResults` at 3, both page limits at 1, and `includeDetails` off.
+3. For a small first run, keep `maxResults` at 3, both page limits at 1, and both `includeDetails` and `enrichProfiles` off.
 4. Click **Start** and follow the progress messages.
 5. Open the completed run's **Dataset**, inspect the listings, and export JSON, CSV or Excel.
+
+Select `enrichProfiles` only if you want seller profile enrichment at an additional $0.001 per unique identifiable profile saved in the run ($1 per 1,000), including partial profiles. It works independently of listing details.
 
 For keyword-only searches, remove the example URL and enter `searchQueries`. See the [no-code guide](docs/no-code-guide.md) for a walkthrough. Python installation and an API token are only needed for the developer workflow below.
 
@@ -113,7 +115,8 @@ The example uses the official Apify client, a USD 0.003 event-charge cap and a t
   "maxResults": 3,
   "maxPagesPerSearch": 1,
   "maxPagesTotal": 1,
-  "includeDetails": false
+  "includeDetails": false,
+  "enrichProfiles": false
 }
 ```
 
@@ -192,7 +195,7 @@ Yes, through Apify's Input form if your account has access to the Actor. The rep
 
 ### Does it include seller phone numbers or emails?
 
-No contact field is guaranteed. Optional enrichment only returns data available from the source; inspect the detail status fields.
+No contact field is guaranteed. Optional `enrichProfiles` enrichment only returns available source data and is billed separately; inspect the detail status fields.
 
 ### Why can a succeeded run contain no listings?
 
@@ -204,7 +207,9 @@ Read the [full FAQ](docs/faq.md) for additional input and charging questions.
 
 The input accepts up to 1,000 URLs and 1,000 keyword searches. `maxResults` is 1–10,000, `maxPagesPerSearch` is 1–20, and `maxPagesTotal` is 1–1,000. These are caps, not guarantees that enough source listings are available. Retry and pacing settings are managed by the Actor.
 
-Billing is per unique listing saved, including a base listing whose optional details are incomplete. Empty searches, blocked requests, duplicates and rejected rows do not create listing charges. Consult the [Actor's Pricing tab](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) for current tier prices and applicable platform charges.
+Listing billing is per unique listing saved, including a base listing whose optional listing-page details are incomplete. Empty searches, blocked requests, duplicates and rejected rows do not create listing charges. With `enrichProfiles=true`, an additional **$0.001 per unique seller profile per run** applies in every tier, equivalent to **$1 per 1,000 profiles**. The charge requires useful profile endpoint data with an unambiguous `publicAccountId` saved in the Dataset; partial profiles qualify. Repeated sellers are charged once per run. Empty, blocked, unidentified and conflicting-identity profiles do not create profile charges. Basic seller data from the listing page is included in listing billing. The profile option is off by default.
+
+The spending guard reserves budget for both events before profile requests and may stop with some budget remaining. `summary.billingCharged` counts listings and `summary.profilesCharged` counts profiles. Consult the [Actor's Pricing tab](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) for current tier prices and applicable platform charges.
 
 Prices in the Dataset are asking prices at collection time. The Actor does not supply historical prices or calculate price-drop alerts. Source fields may be missing, and OLX can deny access. Partial or empty collection does not establish complete market coverage.
 
