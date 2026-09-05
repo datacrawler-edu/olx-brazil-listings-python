@@ -16,3 +16,8 @@ jobs:
       - run: python -m ruff check examples tests
       - run: python examples/run_actor.py --dry-run
       - run: python examples/export_csv.py data/sample-output.json output/sample.csv
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check examples/javascript/request.mjs
+      - run: node examples/javascript/request.mjs --dry-run

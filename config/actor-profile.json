@@ -31,7 +31,9 @@
     "api": {
       "enabled": true,
       "examples": [
-        "Python"
+        "cURL",
+        "Python",
+        "JavaScript"
       ]
     }
   },
@@ -55,5 +57,27 @@
   "support": {
     "issuesUrl": "https://github.com/datacrawler-edu/olx-brazil-listings-python/issues",
     "actorSupportUrl": "https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata"
+  },
+  "content": {
+    "readmeSectionOrder": [
+      "What this repository helps you do",
+      "Example result",
+      "Run without code",
+      "Try it with Apify's free plan",
+      "Quick start for developers",
+      "Input example",
+      "Request examples",
+      "Output fields",
+      "Common use cases",
+      "How to export OLX Brazil listings to CSV with Python",
+      "How to search OLX Brazil by keyword instead of URL",
+      "FAQ",
+      "Limits and pricing",
+      "Hosted version",
+      "Responsible use",
+      "Support",
+      "License"
+    ],
+    "faqFile": "docs/faq.md"
   }
 }

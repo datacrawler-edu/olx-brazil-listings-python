@@ -1,40 +1,115 @@
-# OLX Brazil Listings Python
+# OLX Brazil listings: scrape prices and export CSV with Python
 
-Python examples for collecting OLX Brazil listing data through the hosted
-[OLX Brazil Scraper](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata).
-Export advertised BRL prices, locations, attributes, photos and listing URLs
-for property research and marketplace price comparisons.
+Collect structured OLX Brazil listings from Apify's web interface, or use the Python, cURL and JavaScript examples in this repository. Inspect BRL asking prices, locations, attributes, photos and listing URLs before building a property-research or marketplace-comparison workflow.
 
-**Availability:** this repository is public; the hosted Actor is currently
-private on Apify. Live execution requires an account with access to the Actor.
-The sample-data exporter and offline tests work without an Apify account.
+[Open OLX Brazil Scraper on Apify](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata)
 
-## What is included
+**Availability:** the repository is public; the hosted Actor is currently private. Live requests and the web workflow require an Apify account with access to the Actor. You can inspect the sample data and export it locally without an account.
 
-- An official Apify Python-client example with a per-run spending cap.
-- The Actor's current input schema and small example input.
-- One complete listing from a real successful run, with no seller contacts.
-- A CSV exporter that retains nested values as JSON cells.
-- Offline tests and GitHub Actions validation.
+## What this repository helps you do
 
-This is an integration repository. The hosted scraper implementation is
-maintained separately. It is an unofficial tool, not affiliated with OLX.
+- Collect listings from an OLX Brazil search URL or keyword search.
+- Compare advertised prices alongside city, neighborhood and listing attributes.
+- Request available descriptions and seller details when needed.
+- Export listings to CSV while retaining nested fields as JSON cells.
 
-## Quick start
+This is an unofficial OLX integration guide with executable examples and sample data. The hosted scraper implementation is maintained separately.
 
-Use Python 3.13. Install the example dependencies:
+## Example result
+
+This complete listing comes from a successful run with optional details disabled. Null seller and description fields reflect that input. Inspect the [JSON sample](data/sample-output.json) or [CSV sample](data/sample-output.csv) without starting a run.
+
+```json
+{
+  "listingId": "1506563934",
+  "title": "Cobertura Residencial / Centro",
+  "url": "https://sp.olx.com.br/vale-do-paraiba-e-litoral-norte/imoveis/cobertura-residencial-centro-1506563934",
+  "price": 1350000,
+  "priceDisplay": "R$ 1.350.000",
+  "currency": "BRL",
+  "location": {
+    "display": "Caraguatatuba, Centro",
+    "city": "Caraguatatuba",
+    "state": "SP",
+    "neighborhood": "Centro",
+    "postalCode": null
+  },
+  "attributes": [
+    {
+      "label": "area",
+      "value": "136mÂ²"
+    },
+    {
+      "label": "bedrooms",
+      "value": "3"
+    },
+    {
+      "label": "bathrooms",
+      "value": "4"
+    },
+    {
+      "label": "parking",
+      "value": "2"
+    }
+  ],
+  "photos": [
+    "https://img.olx.com.br/thumbs700x500/20/203649526589448.webp"
+  ],
+  "thumbnailUrl": "https://img.olx.com.br/thumbs700x500/20/203649526589448.webp",
+  "description": null,
+  "seller": null,
+  "postedAtText": "Hoje, 06:31",
+  "searchUrl": "https://www.olx.com.br/imoveis/venda/estado-sp",
+  "searchQuery": null,
+  "pageNumber": 1,
+  "detailsCollected": false,
+  "detailsStatus": "not_requested",
+  "sellerDetails": null,
+  "sellerDetailsStatus": "not_requested",
+  "scrapedAt": "2026-09-05T09:42:54.300517+00:00"
+}
+```
+
+## Run without code
+
+If your account has access to the hosted Actor:
+
+1. Open [OLX Brazil Scraper](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) in Apify.
+2. In **Input**, paste an OLX Brazil search-result URL into `searchUrls`.
+3. For a small first run, keep `maxResults` at 3, both page limits at 1, and `includeDetails` off.
+4. Click **Start** and follow the progress messages.
+5. Open the completed run's **Dataset**, inspect the listings, and export JSON, CSV or Excel.
+
+For keyword-only searches, remove the example URL and enter `searchQueries`. See the [no-code guide](docs/no-code-guide.md) for a walkthrough. Python installation and an API token are only needed for the developer workflow below.
+
+## Try it with Apify's free plan
+
+Apify's Free plan includes **$5 in monthly prepaid usage**, with no credit card required to start. Available credit can fund small tests of accessible Actors; it does not grant access to a private Actor or provide unlimited free runs. Unused credits expire at the end of the billing cycle and do not roll over. Check [Apify's current pricing](https://apify.com/pricing?fpr=edudata) before running a larger batch.
+
+## Quick start for developers
+
+Use Python 3.13 from the repository root:
 
 ```powershell
 python -m pip install -r requirements.txt
 python examples/run_actor.py --dry-run
 ```
 
-The dry run validates and prints the input without starting or charging a run.
-The example uses the same values as the Actor's initial form:
+The dry run validates the input without starting a paid run. For live execution, set `APIFY_TOKEN` in your environment using your usual secret-management method, then run:
+
+```powershell
+python examples/run_actor.py --input data/sample-input.json --max-charge 0.003
+```
+
+The example uses the official Apify client, a USD 0.003 event-charge cap and a three-minute run timeout. It writes `output/result.json` containing `runStatus`, `summary` and `items`. An event-charge cap is not a promise that all account-level platform charges are included. Check the run in Console before repeating a request after a connection failure.
+
+## Input example
 
 ```json
 {
-  "searchUrls": ["https://www.olx.com.br/imoveis/venda/estado-sp"],
+  "searchUrls": [
+    "https://www.olx.com.br/imoveis/venda/estado-sp"
+  ],
   "maxResults": 3,
   "maxPagesPerSearch": 1,
   "maxPagesTotal": 1,
@@ -42,93 +117,113 @@ The example uses the same values as the Actor's initial form:
 }
 ```
 
-For live execution, set `APIFY_TOKEN` in your environment using your usual
-secret-management method, then run:
+Replace the URL with your intended search. When both `searchUrls` and `searchQueries` have entries, both sets of searches run. See the [input reference](docs/input-reference.md) and [machine-readable schema](data/input-schema.json).
 
-```powershell
-python examples/run_actor.py --input data/sample-input.json --max-charge 0.003
-```
+## Request examples
 
-This starts a paid Actor run with a USD 0.003 event-charge cap and a three-minute
-run timeout. Results are written to `output/result.json`, including the run
-status, collection summary and every returned listing. The command does not
-restart failed runs automatically. Access-denied responses require access to
-the hosted Actor; a public GitHub repository does not grant that access.
+- **Python:** [run_actor.py](examples/run_actor.py) validates input, starts the Actor and retrieves its Dataset and collection summary.
+- **cURL:** [request instructions](examples/curl-request.md) send the sample JSON to the synchronous Dataset endpoint.
+- **JavaScript:** [request.mjs](examples/javascript/request.mjs) uses Node's built-in fetch to retrieve Dataset items.
 
-## Choose your search
+For JavaScript, use Node.js 22 or later: run `node examples/javascript/request.mjs --dry-run` first, then set `APIFY_TOKEN` and run `node examples/javascript/request.mjs` for a paid request.
 
-Replace the sample search URL with a search-result URL copied from OLX Brazil.
-For a keyword-only search, remove `searchUrls` and use `searchQueries`, such as
-`["apartamento"]`. If both arrays contain entries, both sets of searches run.
+The synchronous REST examples return Dataset rows, not the Python wrapper's summary object. An empty array is not proof that collection succeeded. Inspect the run in Apify Console for diagnostics. See the [official endpoint documentation](https://docs.apify.com/api/v2/actor-run-sync-get-dataset-items-post).
 
-| Input | Meaning |
+## Output fields
+
+| Field | Meaning |
 | --- | --- |
-| `searchUrls` | Up to 1,000 OLX Brazil search-result URLs |
-| `searchQueries` | Up to 1,000 keyword searches |
-| `maxResults` | Result cap, 1–10,000; default 100 when omitted |
-| `maxPagesPerSearch` | Pages per source, 1–20; default 1 |
-| `maxPagesTotal` | Pages across the run, 1–1,000; default 1,000 |
-| `includeDetails` | Optional available description, image and seller enrichment; default false |
+| `listingId`, `url` | Listing identity and source link |
+| `title` | Listing headline |
+| `price`, `priceDisplay`, `currency` | Numeric asking price, display text and BRL currency |
+| `location` | Available city, state, neighborhood and postal code |
+| `attributes` | Source-provided attribute labels and values |
+| `photos`, `thumbnailUrl` | Available image URLs |
+| `description`, `seller`, `sellerDetails` | Optional available enrichment; may be null |
+| `detailsStatus`, `sellerDetailsStatus` | Whether optional enrichment was requested and its result |
+| `searchUrl`, `searchQuery`, `pageNumber` | Search provenance |
+| `scrapedAt` | Collection timestamp |
 
-Pacing and retries are managed by the Actor. There are no user-facing HTTP
-retry or delay settings. [data/input-schema.json](data/input-schema.json)
-contains the precise validation rules.
+See the [output reference](docs/output-reference.md) for null values, provenance and status interpretation.
 
-## Export sample data without a live run
+## Common use cases
+
+- Build a property comparison sheet with asking price, city and bedroom/area attributes.
+- Collect keyword results for a product category and compare available listing attributes.
+- Save separate dated exports for your own subsequent analysis.
+
+The [use-case guide](docs/use-cases.md) explains how to choose the input and interpret each export.
+
+## How to export OLX Brazil listings to CSV with Python
+
+Try the exporter on the included sample:
 
 ```powershell
 python examples/export_csv.py data/sample-output.json output/sample.csv
 ```
 
-After a live run, use `output/result.json` as the source instead. The exporter
-also accepts a plain array of listing objects. [The complete sample](data/sample-output.json)
-shows nullable fields and nested objects exactly as delivered. Empty seller
-fields in that sample reflect a run with details disabled.
-
-## Results, limits and charging
-
-The hosted Actor charges per unique listing saved. Available enrichment is
-included when enabled; a saved base listing remains billable if its optional
-details are incomplete. Empty searches, blocked requests, duplicates and
-rejected rows do not create listing charges. Consult the Actor's Pricing tab
-for current tier prices.
-
-Prices represent asking prices at collection time. The Actor does not provide
-historical prices or calculate price-drop alerts. Missing source fields remain
-empty; seller phone/email data is not guaranteed. OLX can deny access to a
-search or detail page.
-
-Always inspect `summary.status` as well as `runStatus`: a platform-successful
-run can return a blocked or partial collection. The client retains returned
-rows even when the run is unsuccessful; its exit code is 2 for failed runs or
-blocked/failed collection summaries. Partial/empty collections are reported in
-the output, without being mislabeled as complete data coverage.
-
-## Development
+After a live Python run, export its results:
 
 ```powershell
-python -m pip install -r requirements-dev.txt
-python -m pytest -q
-python -m ruff check examples tests
+python examples/export_csv.py output/result.json output/listings.csv
 ```
 
-CI uses mocked clients and local sample data; it does not require secrets or
-start paid runs. See [CONTRIBUTING.md](CONTRIBUTING.md) and
-[SECURITY.md](SECURITY.md).
+The exporter retains every listing field. Nested objects and arrays become JSON cells; it does not flatten bedroom or location values into invented columns.
 
-## Documentation and support
+## How to search OLX Brazil by keyword instead of URL
 
-- [Official Apify Python client](https://docs.apify.com/api/client/python)
-- [Actor input schema](https://docs.apify.com/actors/development/actor-definition/input-schema/specification/v1)
-- [Apify Dataset export formats](https://docs.apify.com/storage/dataset)
+Save the following as `data/keyword-input.json`, then pass it with `--input`:
 
-Open a GitHub issue for these examples. For hosted scraping issues, use the
-Actor's Issues tab with a sanitized input and run ID. Never include tokens.
-Use returned data in accordance with applicable rules and source restrictions.
+```json
+{"searchQueries":["apartamento"],"maxResults":3,"maxPagesPerSearch":1,"maxPagesTotal":1,"includeDetails":false}
+```
 
-Apify links in this guide contain the affiliate identifier `fpr=edudata`.
+```powershell
+python examples/run_actor.py --input data/keyword-input.json --max-charge 0.003
+```
+
+Omitting `searchUrls` prevents the example property URL from becoming a second search. For several keywords, put each keyword in the array and remember that `maxResults` and `maxPagesTotal` apply across the run.
+
+## FAQ
+
+### Can I use this without writing code?
+
+Yes, through Apify's Input form if your account has access to the Actor. The repository itself is public and its samples need no account.
+
+### Does it include seller phone numbers or emails?
+
+No contact field is guaranteed. Optional enrichment only returns data available from the source; inspect the detail status fields.
+
+### Why can a succeeded run contain no listings?
+
+A search can be empty or blocked. In the Python result, inspect `summary.status` as well as `runStatus`. The client retains returned rows and exits with code 2 for failed runs or blocked/failed collection summaries.
+
+Read the [full FAQ](docs/faq.md) for additional input and charging questions.
+
+## Limits and pricing
+
+The input accepts up to 1,000 URLs and 1,000 keyword searches. `maxResults` is 1â€“10,000, `maxPagesPerSearch` is 1â€“20, and `maxPagesTotal` is 1â€“1,000. These are caps, not guarantees that enough source listings are available. Retry and pacing settings are managed by the Actor.
+
+Billing is per unique listing saved, including a base listing whose optional details are incomplete. Empty searches, blocked requests, duplicates and rejected rows do not create listing charges. Consult the [Actor's Pricing tab](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) for current tier prices and applicable platform charges.
+
+Prices in the Dataset are asking prices at collection time. The Actor does not supply historical prices or calculate price-drop alerts. Source fields may be missing, and OLX can deny access. Partial or empty collection does not establish complete market coverage.
+
+## Hosted version
+
+[Open OLX Brazil Scraper on Apify](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) to use its web form or API with an authorized account. Apify hosts execution and stores the output. This public repository does not grant access to the currently private Actor.
+
+## Responsible use
+
+Use listing data in accordance with applicable rules, source access terms and privacy obligations. Never commit API tokens or include them in an issue. This project is not affiliated with OLX.
+
+Links to Apify contain the affiliate identifier `fpr=edudata`; we may earn a commission from referrals.
+
+## Support
+
+For example-code problems, [open a GitHub issue](https://github.com/datacrawler-edu/olx-brazil-listings-python/issues) with the command and sanitized input. For hosted scraping problems, use the [Actor's Issues tab](https://apify.com/datascraperes/olx-brazil-listings-scraper?fpr=edudata) and provide the run ID without credentials.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for offline tests and [SECURITY.md](SECURITY.md) for security reports.
 
 ## License
 
-Example code is provided under the [MIT License](LICENSE). The license does not
-grant rights to third-party listing content or access to the hosted Actor.
+Example code is provided under the [MIT License](LICENSE). This does not grant rights to third-party listing content or access to the hosted Actor.
